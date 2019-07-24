@@ -50,19 +50,21 @@ masterHeader = ("cd "+remoteDir+"/logs`=char(10)'qsub << \EOF1`=char(10)'#PBS "
 masterResources = "#PBS -l nodes=1:ppn=1,pmem=1gb,walltime=12:00:00`=char(10)'"
 spoolerHeader = ("cd "+remoteDir+"/logs`=char(10)'qsub << \EOF2`=char(10)'#PBS"
                  "-N spo_`jobname'`=char(10)'#PBS -S /bin/bash`=char(10)'")
-spoolerWork = ("cd "+remoteDir+"/logs`=char(10)'module load stata/15`=char(10)'"
-               "stata-mp -b "+remoteDir+"/scripts/_runBundle.do spool "
-               ""+remoteDir+" `nrep' `jobname' 0 `callBack' `email' `nodes' "
-               "`ppn' `pmem' `walltime' `wFName' 0 0 `argPass'`=char(10)'")
+spoolerWork = ("cd "+remoteDir+"/logs`=char(10)'module load "
+               "stata/15`=char(10)'stata-mp -b "+remoteDir+""
+               "/scripts/_runBundle.do spool "+remoteDir+" `nrep' `jobname' "
+               "0 `callBack' `email' `nodes' `ppn' `pmem' `walltime' "
+               "`wFName' 0 0 `argPass'`=char(10)'")
 spoolerTail = "EOF2`=char(10)'"
-monitorHeader = ("cd "+remoteDir+"/logs`=char(10)'qsub << \EOF3`=char(10)'#PBS "
-                 "-N mon_`jobname'`=char(10)'#PBS -S /bin/bash`=char(10)'")
+monitorHeader = ("cd "+remoteDir+"/logs`=char(10)'qsub << \EOF3`=char(10)'"
+                 "#PBS -N mon_`jobname'`=char(10)'#PBS -S "
+                 "/bin/bash`=char(10)'")
 monitorResources = ("#PBS -l nodes=1:ppn=1,pmem=1gb,"
                     "walltime=120:00:00`=char(10)'")
 monitorEmail = "#PBS -m e`=char(10)'#PBS -M `email'`=char(10)'"
 monitorWork = ("cd "+remoteDir+"/logs`=char(10)'module load stata/15`=char(10)"
-               "'module load moab`=char(10)'stata-mp -b "
-               ""+remoteDir+"/scripts/_runBundle.do monitor "+remoteDir+" `nrep' "
+               "'module load moab`=char(10)'stata-mp -b "+remoteDir+""
+               "/scripts/_runBundle.do monitor "+remoteDir+" `nrep' "
                "`jobname' 0 `callBack' `email' `nodes' `ppn' `pmem' "
                "`walltime' `wFName' `cFName' `mFName' `argPass'`=char(10)'")
 monitorTail = "EOF3`=char(10)'"
